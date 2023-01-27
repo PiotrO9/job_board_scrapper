@@ -7,11 +7,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// app.get('/info', (req, res) => {
-//     ScraperWithFilter('https://nofluffjobs.com/pl/Vue.js?page=1&criteria=requirement%3DReact,JavaScript')
-//         .then((JobOffers) => res.send(JobOffers))
-// });
-
 app.get('/simplequery/:query', (req, res) => {
     let query = req.params.query;
     ScraperWithFilter(`https://nofluffjobs.com/pl/${query}?page=1`)
@@ -56,8 +51,6 @@ app.get('/experienceAndRequirementsAndPage/:seniority/:requirements/:page', (req
 })
 
 //Conecting criteries
-
-
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');

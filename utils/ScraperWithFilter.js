@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 
 async function ScraperWithFilter(url) {
     const browser = await puppeteer.launch({
-        headless: false,
+        // headless: false,
         defaultViewport: {
             width: 1920,
             height: 1080

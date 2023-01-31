@@ -1,7 +1,9 @@
 const ScraperWithFilter = require('./utils/ScraperWithFilter.js');
 const PrepareExperienceAndRequirementsQuery = require('./utils/PrepareExperienceAndRequirementsQuery.js');
 const express = require('express');
+const cors = require('cors');
 const app = express();
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

@@ -1,11 +1,13 @@
 const ScraperWithFilter = require('./ScraperWithFilter.js');
 async function ScraperFromDefaultPage() {
-    const firstPageResults = new Promise(resolve => resolve(ScraperWithFilter(`https://nofluffjobs.com/pl/?criteria=employment%3Dpermanent,zlecenie,b2b,uod,intern&page=1`)));
-    const secondPageResults = new Promise(resolve => resolve(ScraperWithFilter(`https://nofluffjobs.com/pl/?criteria=employment%3Dpermanent,zlecenie,b2b,uod,intern&page=2`)));
-    const thirdPageResults = new Promise(resolve => resolve(ScraperWithFilter(`https://nofluffjobs.com/pl/?criteria=employment%3Dpermanent,zlecenie,b2b,uod,intern&page=3`)));
+    const pages = [1, 2, 3, 4, 5];
+  const tasks = pages.map(page => {
+    return new Promise(resolve => resolve(ScraperWithFilter(`https://nofluffjobs.com/pl/?criteria=employment%3Dpermanent,zlecenie,b2b,uod,intern&page=${page}`)));
+  });
 
-    const result = await Promise.all([firstPageResults, secondPageResults, thirdPageResults]);
-    return [].concat(...result);
+  const results = await Promise.all(tasks);
+  const combinedArray = [].concat(...results);
+  return combinedArray;
 }
 
 module.exports = ScraperFromDefaultPage

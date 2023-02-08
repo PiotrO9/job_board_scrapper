@@ -1,6 +1,6 @@
 const ScraperWithFilter = require('./ScraperWithFilter.js');
 async function ScraperFromDefaultPage() {
-    const pages = [1, 2, 3, 4, 5];
+    const pages = [1, 2, 3, 4];
   const tasks = pages.map(page => {
     return new Promise(resolve => resolve(ScraperWithFilter(`https://nofluffjobs.com/pl/?criteria=employment%3Dpermanent,zlecenie,b2b,uod,intern&page=${page}`)));
   });

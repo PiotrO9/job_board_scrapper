@@ -3,8 +3,22 @@ const ScraperFromDefaultPage = require('./utils/ScraperFromDefaultPage.js');
 const PrepareExperienceAndRequirementsQuery = require('./utils/PrepareExperienceAndRequirementsQuery.js');
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
+const router = express.Router();
+
+app.use("/api", router);
+app.use(bodyParser.json());
 app.use(cors());
+
+app.post('/test', (req, res) => {
+    const data = req.body;
+
+    res.send({
+        test: "data",
+        data: data
+    });
+})
 
 app.get('/', (req, res) => {
     ScraperFromDefaultPage()

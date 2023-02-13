@@ -14,8 +14,9 @@ app.use(cors());
 app.post('/test', (req, res) => {
     const data = req.body;
 
+
+
     res.send({
-        test: "data",
         data: data
     });
 })
@@ -27,6 +28,8 @@ app.get('/', (req, res) => {
 
 app.get('/hello', (req, res) => {
     res.send('Hello World!');
+
+    
 })
 
 app.get('/simplequery/:query', (req, res) => {

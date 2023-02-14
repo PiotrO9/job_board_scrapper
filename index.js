@@ -1,5 +1,6 @@
 const ScraperWithFilter = require('./utils/ScraperWithFilter.js');
 const ScraperFromDefaultPage = require('./utils/ScraperFromDefaultPage.js');
+const ScraperWithCriterias = require('./utils/ScraperWithCriterias.js');
 const PrepareExperienceAndRequirementsQuery = require('./utils/PrepareExperienceAndRequirementsQuery.js');
 const express = require('express');
 const cors = require('cors');
@@ -14,8 +15,6 @@ app.use(cors());
 app.post('/test', (req, res) => {
     const data = req.body;
 
-
-
     res.send({
         data: data
     });
@@ -27,9 +26,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/hello', (req, res) => {
-    res.send('Hello World!');
+    const testParams = {
+        // Location: "Warszawa",
+        Title: "Vue.js developer",
+        Criterias: {
+            Experience: ['Senior','Junior'],
+            ContractType: ['permanent', 'b2b', 'intern']
+        },
+        Salary: {
+            min: 10000,
+            max: 20000
+        }
+    }
 
-    
+    ScraperWithCriterias(testParams)
+        .then((result) => {
+            ScraperWithFilter(result)
+                .then(jobOffers => res.send(jobOffers));
+        })
 })
 
 app.get('/simplequery/:query', (req, res) => {

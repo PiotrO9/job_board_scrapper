@@ -13,9 +13,10 @@ async function ScraperWithCriterias(data) {
             }
         }
     }
-
-    if(data.Location != null) {
-        linkWithCriterias += data.Location;
+    else {
+        if(data.Location != null) {
+            linkWithCriterias += data.Location;
+        }
     }
 
     linkWithCriterias += "?page=1";
@@ -74,14 +75,18 @@ async function ScraperWithCriterias(data) {
         }
     }
 
-    if(Salary) {
+    if(data.Salary) {
         if(atLeastOneCriteria) {
-            linkWithCriterias += ""; 
+            linkWithCriterias += `%20salary>pln${data.Salary.min}`;
+            linkWithCriterias += `%20salary<pln${data.Salary.max}`;
         }
         else {
-            linkWithCriterias += 
+            linkWithCriterias += `salary>pln${data.Salary.min}`;
+            linkWithCriterias += `%20salary<pln${data.Salary.max}`;
         }
     }
 
     return linkWithCriterias;
 }
+
+module.exports = ScraperWithCriterias

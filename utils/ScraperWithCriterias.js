@@ -3,18 +3,20 @@ async function ScraperWithCriterias(data) {
     let keyWords = [];
     let atLeastOneCriteria = false
 
-    if(data.Title != null) {
+    if(data.Title) {
+        console.log(data.Title)
         if(data.Title.indexOf(' ') > 0) {
-            keyWords = data.Title.split(" ");
-            linkWithCriterias += keyWords[0];
-            
-            if(data.Location != null) {
-                linkWithCriterias += "/" + data.Location;
-            }
+            keyWords = data.Title.split(" ");        
+        }
+        
+        linkWithCriterias += data.Title;
+
+        if(data.Location) {
+            linkWithCriterias += "/" + data.Location;
         }
     }
     else {
-        if(data.Location != null) {
+        if(data.Location) {
             linkWithCriterias += data.Location;
         }
     }
@@ -23,8 +25,9 @@ async function ScraperWithCriterias(data) {
 
     linkWithCriterias += "&criteria=";
 
-    if(data.Criterias.Experience != []) {
+    console.log(data)
 
+    if(data.Criterias.Experience.length > 0) {
         if(atLeastOneCriteria) {
             linkWithCriterias += "%20seniority%3D";
         }
@@ -41,7 +44,7 @@ async function ScraperWithCriterias(data) {
         }
     }
 
-    if(data.Criterias.ContractType != null) {
+    if(data.Criterias.ContractType.length > 0) {
         if(atLeastOneCriteria) {
             linkWithCriterias += "%20employment%3D";
         }
@@ -58,7 +61,7 @@ async function ScraperWithCriterias(data) {
         }
     }
 
-    if(keyWords != []) {
+    if(keyWords.length > 1) {
         if(atLeastOneCriteria) {
             linkWithCriterias += "%20keyword%3D";
         }
@@ -75,10 +78,10 @@ async function ScraperWithCriterias(data) {
         }
     }
 
-    if(data.Salary) {
+    if(data.Salary && data.Salary.min != 0 && data.Salary.max != 50000) {
         if(atLeastOneCriteria) {
-            linkWithCriterias += `%20salary>pln${data.Salary.min}`;
-            linkWithCriterias += `%20salary<pln${data.Salary.max}`;
+            linkWithCriterias += `%20salary>${data.Salary.min}pln`;
+            linkWithCriterias += `%20salary<${data.Salary.max}pln`;
         }
         else {
             linkWithCriterias += `salary>pln${data.Salary.min}`;
@@ -86,6 +89,7 @@ async function ScraperWithCriterias(data) {
         }
     }
 
+    console.log(linkWithCriterias);
     return linkWithCriterias;
 }
 

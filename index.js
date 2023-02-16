@@ -8,17 +8,19 @@ const bodyParser = require('body-parser');
 const app = express();
 const router = express.Router();
 
-app.use("/api", router);
+// app.use("/api", router);
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post('/test', (req, res) => {
+app.post('/queryWithCriterias', (req, res) => {
     const data = req.body;
 
-    res.send({
-        data: data
-    });
-})
+    ScraperWithCriterias(data)
+        .then((result) => {
+            ScraperWithFilter(result)
+                .then(jobOffers => res.send(jobOffers));
+        })
+});
 
 app.get('/', (req, res) => {
     ScraperFromDefaultPage()
@@ -88,8 +90,6 @@ app.get('/experienceAndRequirementsAndPage/:seniority/:requirements/:page', (req
     ScraperWithFilter(PrepareExperienceAndRequirementsQuery(seniority, requirements, pageNumber))
         .then((JobOffers) => res.send(JobOffers))
 })
-
-//Conecting criteries
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');

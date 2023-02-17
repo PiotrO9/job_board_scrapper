@@ -1,14 +1,12 @@
 const ScraperWithFilter = require('./utils/ScraperWithFilter.js');
 const ScraperFromDefaultPage = require('./utils/ScraperFromDefaultPage.js');
 const ScraperWithCriterias = require('./utils/ScraperWithCriterias.js');
-const PrepareExperienceAndRequirementsQuery = require('./utils/PrepareExperienceAndRequirementsQuery.js');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 const router = express.Router();
 
-// app.use("/api", router);
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -27,27 +25,6 @@ app.get('/', (req, res) => {
         .then(jobOffersResponse => res.send(jobOffersResponse))
 });
 
-app.get('/hello', (req, res) => {
-    const testParams = {
-        // Location: "Warszawa",
-        Title: "Vue.js developer",
-        Criterias: {
-            Experience: ['Senior','Junior'],
-            ContractType: ['permanent', 'b2b', 'intern']
-        },
-        Salary: {
-            min: 10000,
-            max: 20000
-        }
-    }
-
-    ScraperWithCriterias(testParams)
-        .then((result) => {
-            ScraperWithFilter(result)
-                .then(jobOffers => res.send(jobOffers));
-        })
-})
-
 app.get('/simplequery/:query', (req, res) => {
     let query = req.params.query;
     ScraperWithFilter(`https://nofluffjobs.com/pl/${query}?page=1`)
@@ -58,36 +35,6 @@ app.get('/simplequery/:query/:page', (req, res) => {
     let query = req.params.query;
     let pageNumber = req.params.page;
     ScraperWithFilter(`https://nofluffjobs.com/pl/${query}?page=${pageNumber}`)
-        .then((JobOffers) => res.send(JobOffers))
-})
-
-app.get('/experience/:seniority', (req, res) => {
-    let seniority = req.params.seniority;
-    ScraperWithFilter(`https://nofluffjobs.com/pl/?criteria=seniority%3D${seniority}&page=1`)
-        .then((JobOffers) => res.send(JobOffers))
-})
-
-app.get('/experience/:seniority/:page', (req, res) => {
-    let seniority = req.params.seniority;
-    let pageNumber = req.params.page;
-    ScraperWithFilter(`https://nofluffjobs.com/pl/?criteria=seniority%3D${seniority}&page=${pageNumber}`)
-        .then((JobOffers) => res.send(JobOffers))
-})
-
-app.get('/experienceAndRequirements/:seniority/:requirements', (req, res) => {
-    let seniority = req.params.seniority;
-    let requirements = req.params.requirements;
-
-    ScraperWithFilter(PrepareExperienceAndRequirementsQuery(seniority, requirements))
-        .then((JobOffers) => res.send(JobOffers))
-})
-
-app.get('/experienceAndRequirementsAndPage/:seniority/:requirements/:page', (req, res) => {
-    let seniority = req.params.seniority;
-    let requirements = req.params.requirements;
-    let pageNumber = req.params.page;
-
-    ScraperWithFilter(PrepareExperienceAndRequirementsQuery(seniority, requirements, pageNumber))
         .then((JobOffers) => res.send(JobOffers))
 })
 

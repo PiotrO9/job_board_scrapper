@@ -1,6 +1,7 @@
 const ScraperWithFilter = require('./utils/ScraperWithFilter.js');
 const ScraperFromDefaultPage = require('./utils/ScraperFromDefaultPage.js');
 const ScraperWithCriterias = require('./utils/ScraperWithCriterias.js');
+const ScraperDetailPage = require('./utils/ScraperDetailPage.js');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -23,6 +24,12 @@ app.post('/queryWithCriterias', (req, res) => {
 app.get('/', (req, res) => {
     ScraperFromDefaultPage()
         .then(jobOffersResponse => res.send(jobOffersResponse))
+});
+
+app.get('/test', (req, res) => {
+    ScraperDetailPage('https://nofluffjobs.com/pl/job/remote-vue-mid-frontend-developer-link-group-x55czhi3')
+        // .then(respond => console.log(respond))
+        .then(respond => res.send(respond))
 });
 
 app.get('/simplequery/:query', (req, res) => {

@@ -21,15 +21,16 @@ app.post('/queryWithCriterias', (req, res) => {
         })
 });
 
+app.post('/detailPage', (req, res) => {
+    const urlToScrap = req.body;
+
+    ScraperDetailPage(urlToScrap.data)
+        .then(respond => res.send(respond))
+});
+
 app.get('/', (req, res) => {
     ScraperFromDefaultPage()
         .then(jobOffersResponse => res.send(jobOffersResponse))
-});
-
-app.get('/test', (req, res) => {
-    ScraperDetailPage('https://nofluffjobs.com/pl/job/remote-vue-mid-frontend-developer-link-group-x55czhi3')
-        // .then(respond => console.log(respond))
-        .then(respond => res.send(respond))
 });
 
 app.get('/simplequery/:query', (req, res) => {

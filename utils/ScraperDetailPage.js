@@ -15,17 +15,36 @@ async function ScraperDetailPage(url) {
 
     let NeccessarySkillsArray = [];
     let RequirementsArray = [];
-    let Description = await page.$eval('body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div:nth-child(1) > common-posting-content-wrapper > div:nth-child(1) > section:nth-of-type(3) > div > nfj-read-more > div > p', element => element.textContent)
+    let Description; 
+    try {
+        Description = await page.$eval('body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div:nth-child(1) > common-posting-content-wrapper > div:nth-child(1) > section:nth-of-type(3) > div > nfj-read-more > div > p', element => element.textContent)
+    }
+    catch(error) {
+        Description = ""
+    }
 
     console.log(Description)
 
     for(let i = 1; i < NecessarySkillsSection.length; i++) {
-        let OneSkil = await page.$eval(`body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div > common-posting-content-wrapper > div > div > section > ul > li:nth-child(${i}) > span`, element => element.innerText);
+        let OneSkil
+        try {
+            OneSkil = await page.$eval(`body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div > common-posting-content-wrapper > div > div > section > ul > li:nth-child(${i}) > span`, element => element.innerText);
+        }
+        catch(error) {
+            break
+        }
+
         NeccessarySkillsArray.push(OneSkil)
     }
 
     for(let i = 1; i < RequirementsSection.length; i++) {
-        let OneRequirement = await page.$eval(`body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div:nth-child(1) > common-posting-content-wrapper > div:nth-child(1) > section:nth-of-type(2) > div > nfj-read-more > div > ul:nth-of-type(1) > li:nth-child(${i})`, element => element.innerText)
+        let OneRequirement
+        try {
+            OneRequirement = await page.$eval(`body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div:nth-child(1) > common-posting-content-wrapper > div:nth-child(1) > section:nth-of-type(2) > div > nfj-read-more > div > ul:nth-of-type(1) > li:nth-child(${i})`, element => element.innerText)
+        } 
+        catch(error) {
+            break
+        }
         RequirementsArray.push(OneRequirement)
     }
 

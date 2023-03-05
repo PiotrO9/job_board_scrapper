@@ -5,7 +5,8 @@ async function ScraperWithFilter(url) {
         defaultViewport: {
             width: 1920,
             height: 1080
-        }
+        },
+        headless: true
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0);

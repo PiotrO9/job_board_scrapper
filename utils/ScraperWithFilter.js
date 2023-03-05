@@ -8,6 +8,7 @@ async function ScraperWithFilter(url) {
         }
     });
     const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
     await page.goto(url);
 
     const ResponseOffers = []

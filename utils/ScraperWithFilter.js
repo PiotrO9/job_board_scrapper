@@ -1,12 +1,12 @@
 const puppeteer = require('puppeteer');
+const chromium = require ('chrome-aws-lambda');
 
 async function ScraperWithFilter(url) {
-    const browser = await puppeteer.launch({
-        defaultViewport: {
-            width: 1920,
-            height: 1080
-        },
-        headless: true
+    const browser = await chromium.puppeteer.launch({
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: true,
+        ignoreHTTPSErrors: true
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0);

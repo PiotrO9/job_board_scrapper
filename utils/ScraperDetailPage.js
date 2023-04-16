@@ -16,6 +16,7 @@ async function ScraperDetailPage(url) {
     let NeccessarySkillsArray = [];
     let RequirementsArray = [];
     let Description; 
+
     try {
         Description = await page.$eval('body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div:nth-child(1) > common-posting-content-wrapper > div:nth-child(1) > section:nth-of-type(3) > div > nfj-read-more > div > p', element => element.textContent)
     }
@@ -23,10 +24,9 @@ async function ScraperDetailPage(url) {
         Description = ""
     }
 
-    console.log(Description)
-
     for(let i = 1; i < NecessarySkillsSection.length; i++) {
-        let OneSkil
+        let OneSkil;
+
         try {
             OneSkil = await page.$eval(`body > nfj-root > nfj-layout > nfj-main-content > div > nfj-posting-details > div > common-main-loader > main > article > div > common-posting-content-wrapper > div > div > section > ul > li:nth-child(${i}) > span`, element => element.innerText);
         }

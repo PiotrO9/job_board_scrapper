@@ -4,7 +4,6 @@ async function ScraperWithCriterias(data) {
     let atLeastOneCriteria = false
 
     if(data.Title) {
-        console.log(data.Title)
         if(data.Title.indexOf(' ') > 0) {
             keyWords = data.Title.split(" ");        
         }
@@ -24,8 +23,6 @@ async function ScraperWithCriterias(data) {
     linkWithCriterias += "?page=1";
 
     linkWithCriterias += "&criteria=";
-
-    console.log(data)
 
     if(data.Criterias.Experience.length > 0) {
         if(atLeastOneCriteria) {
@@ -89,7 +86,6 @@ async function ScraperWithCriterias(data) {
         }
     }
 
-    console.log(linkWithCriterias);
     return linkWithCriterias;
 }
 
